@@ -354,6 +354,8 @@ with open('outputEmbaixadas.txt', 'w') as f:
         f.write("\nBolas duplicadas " + str(bolasDuplicadas))
         f.write("\nPessoas duplicadas " + str(pessoasDuplicadas))
         f.write("\nEmbaixadas "+ str(embaixada))
+if(embaixada == 0):
+  textoEmbaixadas = '0'
 with open('outputFrames.txt', 'w') as f:
         f.write(textoEmbaixadas)
 
@@ -398,7 +400,13 @@ print("pausa3")
 tree_video = cv2.VideoCapture('vboundBox3.mp4')
 path_to_save = os.path.abspath("imgSave/")
 
+
+frame_width  = tree_video.get(cv2.CAP_PROP_FRAME_WIDTH )
+frame_height = tree_video.get(cv2.CAP_PROP_FRAME_HEIGHT )
+
 img = cv2.imread('logo_vertical2.png')
+if(frame_height == 720.0):
+  img = cv2.imread('logo_vertical720.png')
 
 # Get Image dimensions
 img_height, img_width, _ = img.shape
@@ -423,8 +431,6 @@ print( length )
 
 
 
-frame_width  = tree_video.get(cv2.CAP_PROP_FRAME_WIDTH )
-frame_height = tree_video.get(cv2.CAP_PROP_FRAME_HEIGHT )
 
 print(str(frame_height) +" "+str(frame_width))
 while(True):
