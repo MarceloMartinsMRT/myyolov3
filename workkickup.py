@@ -154,6 +154,8 @@ def main():
 
     # release capture 
     cap.release()
+    
+    cv2.destroyAllWindows()
     print('done')
 
     ### Como rodar incode
@@ -161,6 +163,8 @@ def main():
 if __name__ == '__main__':
   main()
 
+self.video_selected.release()
+self.out.release()
 print("pausa1")
 #time.sleep(10.0)
 
