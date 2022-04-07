@@ -357,7 +357,7 @@ with open('outputEmbaixadas.txt', 'w') as f:
 with open('outputFrames.txt', 'w') as f:
         f.write(textoEmbaixadas)
 
-arquivo = open("teste.bin", "wb")
+arquivo = open("finalcount.bin", "wb")
 lista = [str(embaixada)]
 pickle.dump(lista, arquivo)
 arquivo.close()
@@ -485,7 +485,7 @@ for filename in sorted(glob.glob('imgSave/*.jpg') , key=numericalSort):
 
 
 
-out = cv2.VideoWriter('Bound_and_Count3.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 15, size)
+out = cv2.VideoWriter('finalvideo.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 15, size)
 
 #out = cv2.VideoWriter('./yolov3/Bound_and_Count3.mp4',cv2.VideoWriter_fourcc(*'MP4V'), 15, size)
 
