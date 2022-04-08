@@ -143,7 +143,7 @@ def main():
     print("width " + str(width))
     print("height " + str(height))
 
-    with open('sizes.txt', 'w') as f:
+    with open('myyolov3/sizes.txt', 'w') as f:
       f.write(str(width)+ " "+str(height))
 
     # cap opened successfully
