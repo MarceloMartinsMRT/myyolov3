@@ -32,7 +32,7 @@ height = ''
 
 testeWget = wget.download(url,'embaixadinha2.mp4')
 
-print(str(testeWget)
+print(str(testeWget))
 
 
 print('time before start')
