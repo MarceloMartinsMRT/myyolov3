@@ -419,12 +419,11 @@ path_to_save = os.path.abspath("imgSave/")
 frame_width  = tree_video.get(cv2.CAP_PROP_FRAME_WIDTH )
 frame_height = tree_video.get(cv2.CAP_PROP_FRAME_HEIGHT )
 
-
 if(frame_height == 720.0):
   img = cv2.imread('logo_vertical720.png')
 else:
   img = cv2.imread('logo_vertical2.png')
-
+ 
 # Get Image dimensions
 img_height, img_width, _ = img.shape
 print(str(img_height) +" "+str(img_width))
