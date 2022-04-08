@@ -65,11 +65,12 @@ def text_update(frame_):
   global qtd
   embaixada = qtd
   getFrame = str(frame_)
-  for fr in listFrames:
-    #print(str(frame_)+ " " + fr)
-    if(int(getFrame) == int(fr)):
-      qtd+=1
-      embaixada = qtd
+  if(listFrames != ''):
+        for fr in listFrames:
+          #print(str(frame_)+ " " + fr)
+          if(int(getFrame) == int(fr)):
+            qtd+=1
+            embaixada = qtd
 
   print("qtd: " + str(qtd))    
   return str(embaixada)
