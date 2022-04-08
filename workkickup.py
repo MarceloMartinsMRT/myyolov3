@@ -184,7 +184,7 @@ print("pausa1")
 
 #!python detect.py --weights yolov3.pt --img 640 --conf 0.25 --source data/images --save-txt --save-conf --classes 0 32
 
-os.system('python detect.py --weights yolov3.pt --img 640 --conf 0.25 --source myyolov3/data/images --save-conf    --save-txt --classes 0 32')
+os.system('python myyolov3/detect.py --weights yolov3.pt --img 640 --conf 0.25 --source myyolov3/data/images --save-conf    --save-txt --classes 0 32')
 
 
 
