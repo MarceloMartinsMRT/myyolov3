@@ -46,6 +46,7 @@ urllib.request.urlretrieve(url,local)
 
 print('time before start')
 time.sleep(10.0)
+fps = ''
 
 width =''
 height = ''
@@ -146,8 +147,11 @@ def main():
       os.makedirs(pathIn)
       print('directory created')
 
-    cap = cv2.VideoCapture("embaixadinha2.mp4") 
+    cap = cv2.VideoCapture("embaixadinha2.mp4")  
     path_to_save = os.path.abspath(pathIn)
+
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    #print("fps: "+str(fps))
     
     current_frame = 1
 
@@ -282,7 +286,7 @@ for title in alist:
               break
             if(unicaPessoa == False):
               pessoasDuplicadas +=1
-            alturaPessoa = float(listSizes[1]) * float(words[4])
+              alturaPessoa = float(listSizes[1]) * float(words[4])
             #print("altura Pessoa: "+ str(alturaPessoa))
             #print("altura atual Pessoa: " + str(alturaAtualPessoa))
             if(alturaPessoa < alturaAtualPessoa * 0.7):
@@ -294,11 +298,11 @@ for title in alist:
             unicaPessoa = False
             centroPessoa = float(words[1])
             larguraPessoa = float(words[3])
-            
+                      
             #print("larguraPessoa: " + str(larguraPessoa))
             #print("centroPessoa: " + str(centroPessoa))
 
-
+          
           if(tipo == 32):
 
             if(naoTemBola == False):
@@ -413,7 +417,7 @@ for filename in sorted(glob.glob('runs/detect/exp/*.jpg') , key=numericalSort):
       size = (width,height)
       img_array.append(img)
 
-out = cv2.VideoWriter('vboundBox3.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 15, size)
+out = cv2.VideoWriter('vboundBox3.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 30, size)
 
 for i in range(len(img_array)):
       out.write(img_array[i])
@@ -438,6 +442,8 @@ frame_height = tree_video.get(cv2.CAP_PROP_FRAME_HEIGHT )
 
 if(frame_height == 720.0):
   img = cv2.imread('logo_vertical720.png')
+elif(frame_height == 480.0):
+  img = cv2.imread('logo_vertical848x480.png')
 else:
   img = cv2.imread('logo_vertical2.png')
  
@@ -445,7 +451,7 @@ else:
 img_height, img_width, _ = img.shape
 print(str(img_height) +" "+str(img_width))
 
-fps = tree_video.get(cv2.CAP_PROP_FPS)
+#fps = tree_video.get(cv2.CAP_PROP_FPS)
 print(fps)
 lines = ''
 
@@ -524,7 +530,7 @@ for filename in sorted(glob.glob('imgSave/*.jpg') , key=numericalSort):
 
 
 
-out = cv2.VideoWriter('finalvideo.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 15, size)
+out = cv2.VideoWriter('finalvideo.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 30, size)
 
 #out = cv2.VideoWriter('./yolov3/Bound_and_Count3.mp4',cv2.VideoWriter_fourcc(*'MP4V'), 15, size)
 
