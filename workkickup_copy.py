@@ -147,7 +147,7 @@ def main():
       os.makedirs(pathIn)
       print('directory created')
 
-    cap = cv2.VideoCapture("embaixadinha2.mp4")  
+    cap = cv2.VideoCapture("embaixadinha2.mp4")
     path_to_save = os.path.abspath(pathIn)
 
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -444,6 +444,8 @@ if(frame_height == 720.0):
   img = cv2.imread('logo_vertical720.png')
 elif(frame_height == 480.0):
   img = cv2.imread('logo_vertical848x480.png')
+elif(frame_height == 1280.0):
+  img = cv2.imread('logo_vertical720x1280.png')
 else:
   img = cv2.imread('logo_vertical2.png')
  
