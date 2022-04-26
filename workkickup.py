@@ -13,30 +13,40 @@ from torch._C import NoneType
 import time
 import wget
 import pickle
+import urllib.request
 
 
 
 url = sys.argv[1]
 
-mp4Orig = os.path.exists('myyolov3/embaixadinha2.mp4')
+mp4Orig = os.path.exists('embaixadinha2.mp4')
 print(str(mp4Orig))
               
 
-if(os.path.exists('myyolov3/embaixadinha2.mp4')):
-  os.remove('myyolov3/embaixadinha2.mp4')
+if(os.path.exists('embaixadinha2.mp4')):
+  os.remove('embaixadinha2.mp4')
   print('embaixadinha.mp4 removido')
 
 #url = 'https://video.ftjl2-1.fna.fbcdn.net/v/t39.25447-2/277761056_651071029315651_4578569319050896963_n.mp4?_nc_cat=106&vs=e4248c5c26c7c1ca&_nc_vs=HBksFQAYJEdDQk1qaEJEQ0cxSkpWQUNBRVBtaDVHSldJby1ibWRqQUFBRhUAAsgBABUAGCRHQm40anhBbEVXc0JjSWNDQUt0WmU2Z2tucnNhYnJGcUFBQUYVAgLIAQBLBogScHJvZ3Jlc3NpdmVfcmVjaXBlATENc3Vic2FtcGxlX2ZwcwAQdm1hZl9lbmFibGVfbnN1YgAgbWVhc3VyZV9vcmlnaW5hbF9yZXNvbHV0aW9uX3NzaW0AKGNvbXB1dGVfc3NpbV9vbmx5X2F0X29yaWdpbmFsX3Jlc29sdXRpb24AEWRpc2FibGVfcG9zdF9wdnFzABUAJQAcAAAmqOCAjLnApgsVAigCQzMYC3Z0c19wcmV2aWV3HBdAPXaHKwIMShgZZGFzaF9vZXBfaHEyX2ZyYWdfMl92aWRlbxIAGBh2aWRlb3MudnRzLmNhbGxiYWNrLnByb2Q4ElZJREVPX1ZJRVdfUkVRVUVTVBsJiBVvZW1fdGFyZ2V0X2VuY29kZV90YWcGb2VwX2hkE29lbV9yZXF1ZXN0X3RpbWVfbXMBMAxvZW1fY2ZnX3J1bGUHdW5tdXRlZBNvZW1fcm9pX3JlYWNoX2NvdW50BDM4MzERb2VtX2lzX2V4cGVyaW1lbnQADG9lbV92aWRlb19pZA8zNzEyNjg2NjgyNjI5NzESb2VtX3ZpZGVvX2Fzc2V0X2lkEDEzNTg3MTUzMTQ1OTQzNTQVb2VtX3ZpZGVvX3Jlc291cmNlX2lkEDMxODA4OTQ4MDIxNTU1NDAcb2VtX3NvdXJjZV92aWRlb19lbmNvZGluZ19pZA81MjgwMTMzMTUzNDk1ODclAhwAJcQBGweIAXMENTUyNgJjZAoyMDIyLTA0LTAyA3JjYgQzODAwA2FwcBRGYWNlYm9vayBmb3IgQW5kcm9pZAJjdBlDT05UQUlORURfUE9TVF9BVFRBQ0hNRU5UE29yaWdpbmFsX2R1cmF0aW9uX3MGMjkuNTg2AnRzFXByb2dyZXNzaXZlX2VuY29kaW5ncwA%3D&ccb=1-5&_nc_sid=5e2f14&efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&_nc_ohc=d5FMM759QfkAX8FG16P&tn=SIjHU8LBZWe664y-&_nc_ht=video.ftjl2-1.fna&oh=00_AT9wiW7HE7IoeBS69LYtuVgEr0b1OVX-bCpthTKdK-ctEA&oe=62534835&_nc_rid=192074815240389'
 width =''
 height = ''
 
-testeWget = wget.download(url,'myyolov3/embaixadinha2.mp4')
+#testeWget = wget.download(url,'embaixadinha2.mp4')
 
-print(str(testeWget))
+#print(str(testeWget))
+
+opener=urllib.request.build_opener()
+opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
+urllib.request.install_opener(opener)
+
+
+local='embaixadinha2.mp4'
+urllib.request.urlretrieve(url,local)
 
 
 print('time before start')
-time.sleep(10.0)
+time.sleep(2.0)
+fps = ''
 
 width =''
 height = ''
@@ -105,23 +115,31 @@ def main():
 
     # get file path for desired video and where to save frames locally
     # trocar o nome do video
-    pathIn = 'myyolov3/data/images'
+    pathIn = 'data/images'
 
-    if(os.path.exists('myyolov3/data/images/bus.jpg')):
-      os.remove('myyolov3/data/images/bus.jpg')
+    #if(os.path.exists('data/images/bus.jpg')):
+    #  os.remove('data/images/bus.jpg')
       
-    if(os.path.exists('myyolov3/data/images/zidane.jpg')):
-      os.remove('myyolov3/data/images/zidane.jpg')
+    #if(os.path.exists('data/images/zidane.jpg')):
+    #  os.remove('data/images/zidane.jpg')
 
-    if(os.path.exists('myyolov3/runs/detect')):
-      shutil.rmtree('myyolov3/runs/detect')
+    if(os.path.exists('imgSave')):
+      shutil.rmtree('imgSave')
+
+    if(os.path.exists('runs/detect/exp')):
+      shutil.rmtree('runs/detect/exp')
+
+    if(os.path.exists('data/images/')):
+      shutil.rmtree('data/images/')
+    
+
 
     isExist = os.path.exists(pathIn)
 
     print("exists? "+ str(isExist))
     
-    if not os.path.exists('myyolov3/imgSave'):
-      os.makedirs('myyolov3/imgSave')
+    if not os.path.exists('imgSave'):
+      os.makedirs('imgSave')
       print('imgSaveCreated')
 
   
@@ -129,8 +147,11 @@ def main():
       os.makedirs(pathIn)
       print('directory created')
 
-    cap = cv2.VideoCapture("myyolov3/embaixadinha2.mp4") 
+    cap = cv2.VideoCapture("embaixadinha2.mp4")
     path_to_save = os.path.abspath(pathIn)
+
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    #print("fps: "+str(fps))
     
     current_frame = 1
 
@@ -143,7 +164,7 @@ def main():
     print("width " + str(width))
     print("height " + str(height))
 
-    with open('myyolov3/sizes.txt', 'w') as f:
+    with open('sizes.txt', 'w') as f:
       f.write(str(width)+ " "+str(height))
 
     # cap opened successfully
@@ -184,7 +205,7 @@ print("pausa1")
 
 #!python detect.py --weights yolov3.pt --img 640 --conf 0.25 --source data/images --save-txt --save-conf --classes 0 32
 
-os.system('python myyolov3/detect.py --weights yolov3.pt --img 640 --conf 0.25 --source myyolov3/data/images --save-conf    --save-txt --classes 0 32')
+os.system('python detect.py --weights yolov3.pt --img 640 --conf 0.25 --source data/images --save-conf    --save-txt --classes 0 32')
 
 
 
@@ -194,12 +215,12 @@ os.system('python myyolov3/detect.py --weights yolov3.pt --img 640 --conf 0.25 -
     '''
 
 sizes = ''
-with open('myyolov3/sizes.txt', 'r') as f:
+with open('sizes.txt', 'r') as f:
   sizes = f.readline()
 listSizes = sizes.split(' ')
     
 alist = []
-folder_path = 'myyolov3/runs/detect/exp/labels/'
+folder_path = 'runs/detect/exp/labels/'
 for filename in glob.glob(os.path.join(folder_path, '*.txt')):
       with open(filename, 'r') as f:
         text = f.read()
@@ -265,7 +286,7 @@ for title in alist:
               break
             if(unicaPessoa == False):
               pessoasDuplicadas +=1
-            alturaPessoa = float(listSizes[1]) * float(words[4])
+              alturaPessoa = float(listSizes[1]) * float(words[4])
             #print("altura Pessoa: "+ str(alturaPessoa))
             #print("altura atual Pessoa: " + str(alturaAtualPessoa))
             if(alturaPessoa < alturaAtualPessoa * 0.7):
@@ -277,11 +298,11 @@ for title in alist:
             unicaPessoa = False
             centroPessoa = float(words[1])
             larguraPessoa = float(words[3])
-            
+                      
             #print("larguraPessoa: " + str(larguraPessoa))
             #print("centroPessoa: " + str(centroPessoa))
 
-
+          
           if(tipo == 32):
 
             if(naoTemBola == False):
@@ -364,14 +385,14 @@ print("Pessoas duplicadas: " + str(pessoasDuplicadas))
 print(printed)
 print("texto embaixadas"+ textoEmbaixadas)
 
-with open('myyolov3/outputEmbaixadas.txt', 'w') as f:
+with open('outputEmbaixadas.txt', 'w') as f:
         f.write("Erros "+ str(erros))
         f.write("\nBolas duplicadas " + str(bolasDuplicadas))
         f.write("\nPessoas duplicadas " + str(pessoasDuplicadas))
         f.write("\nEmbaixadas "+ str(embaixada))
 if(embaixada == 0):
   textoEmbaixadas = '0'
-with open('myyolov3/outputFrames.txt', 'w') as f:
+with open('outputFrames.txt', 'w') as f:
         f.write(textoEmbaixadas)
 
 arquivo = open("finalcount.bin", "wb")
@@ -390,13 +411,13 @@ img_array = []
 numbers = re.compile(r'(\d+)')
 
 
-for filename in sorted(glob.glob('myyolov3/runs/detect/exp/*.jpg') , key=numericalSort):
+for filename in sorted(glob.glob('runs/detect/exp/*.jpg') , key=numericalSort):
       img = cv2.imread(filename)
       height, width, layers = img.shape
       size = (width,height)
       img_array.append(img)
 
-out = cv2.VideoWriter('myyolov3/vboundBox3.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 15, size)
+out = cv2.VideoWriter('vboundBox3.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 30, size)
 
 for i in range(len(img_array)):
       out.write(img_array[i])
@@ -412,29 +433,33 @@ print("pausa3")
     escrever textos
 '''
 
-tree_video = cv2.VideoCapture('myyolov3/vboundBox3.mp4')
-path_to_save = os.path.abspath("myyolov3/imgSave/")
+tree_video = cv2.VideoCapture('vboundBox3.mp4')
+path_to_save = os.path.abspath("imgSave/")
 
 
 frame_width  = tree_video.get(cv2.CAP_PROP_FRAME_WIDTH )
 frame_height = tree_video.get(cv2.CAP_PROP_FRAME_HEIGHT )
 
 if(frame_height == 720.0):
-  img = cv2.imread('myyolov3/logo_vertical720.png')
+  img = cv2.imread('logo_vertical720.png')
+elif(frame_height == 480.0):
+  img = cv2.imread('logo_vertical848x480.png')
+elif(frame_height == 1280.0):
+  img = cv2.imread('logo_vertical720x1280.png')
 else:
-  img = cv2.imread('myyolov3/logo_vertical2.png')
+  img = cv2.imread('logo_vertical2.png')
  
 # Get Image dimensions
 img_height, img_width, _ = img.shape
 print(str(img_height) +" "+str(img_width))
 
-fps = tree_video.get(cv2.CAP_PROP_FPS)
+#fps = tree_video.get(cv2.CAP_PROP_FPS)
 print(fps)
 lines = ''
 
 frame_ = 0
 qtd = 0
-with open('myyolov3/outputFrames.txt', 'r') as f:
+with open('outputFrames.txt', 'r') as f:
   lines = f.readline()
 
 lenLines = len(lines)
@@ -459,18 +484,21 @@ while(True):
   
   alpha = 0.2
   beta = (1.0)
-  if(frame_ < length):
-    dst = cv2.addWeighted(img, alpha, frame, beta, 0.0)
+  #comment to temporarily remove the watermark
+  #if(frame_ < length):
+  #  dst = cv2.addWeighted(img, alpha, frame, beta, 0.0)
     #overlay_image_alpha(frame, img, 150, 350, alpha_mask=0.1)
 
     
-  cv2.putText(dst, on_video_text, (150, 150), font, 3, (0, 255, 255), 6, cv2.LINE_4)
+  cv2.putText(frame, on_video_text, (150, 150), font, 3, (0, 255, 255), 6, cv2.LINE_4)
+  #cv2.putText(dst, on_video_text, (150, 150), font, 3, (0, 255, 255), 6, cv2.LINE_4)
   print("qtd: " + str(qtd))
   
 
   name = 'saveVid-' + str(frame_ + 1) + '.jpg'
   if(frame_ < length):
-    cv2.imwrite(os.path.join(path_to_save, name), dst)
+    #cv2.imwrite(os.path.join(path_to_save, name), dst)
+    cv2.imwrite(os.path.join(path_to_save, name), frame)
   else:
     break
   frame_ = frame_ + 1
@@ -499,7 +527,7 @@ print("pausa4")
 img_array = []
 numbers = re.compile(r'(\d+)')
 
-for filename in sorted(glob.glob('myyolov3/imgSave/*.jpg') , key=numericalSort):
+for filename in sorted(glob.glob('imgSave/*.jpg') , key=numericalSort):
   img = cv2.imread(filename)
   height, width, layers = img.shape
   size = (width,height)
@@ -507,7 +535,7 @@ for filename in sorted(glob.glob('myyolov3/imgSave/*.jpg') , key=numericalSort):
 
 
 
-out = cv2.VideoWriter('finalvideo.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 15, size)
+out = cv2.VideoWriter('finalvideo.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 30, size)
 
 #out = cv2.VideoWriter('./yolov3/Bound_and_Count3.mp4',cv2.VideoWriter_fourcc(*'MP4V'), 15, size)
 
@@ -517,6 +545,7 @@ for i in range(len(img_array)):
 out.release()
 print('finished create video')
 
+'''
 print('pausa 5')
 time.sleep(10.0)
 
@@ -539,3 +568,4 @@ else:
 
 
 print('finished send')
+'''
