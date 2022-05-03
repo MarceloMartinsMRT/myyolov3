@@ -19,12 +19,12 @@ import urllib.request
 
 url = sys.argv[1]
 
-mp4Orig = os.path.exists('embaixadinha2.mp4')
+mp4Orig = os.path.exists('embaixadinha.mp4')
 print(str(mp4Orig))
               
 
-if(os.path.exists('embaixadinha2.mp4')):
-  os.remove('embaixadinha2.mp4')
+if(os.path.exists('embaixadinha.mp4')):
+  os.remove('embaixadinha.mp4')
   print('embaixadinha.mp4 removido')
 
 #url = 'https://video.ftjl2-1.fna.fbcdn.net/v/t39.25447-2/277761056_651071029315651_4578569319050896963_n.mp4?_nc_cat=106&vs=e4248c5c26c7c1ca&_nc_vs=HBksFQAYJEdDQk1qaEJEQ0cxSkpWQUNBRVBtaDVHSldJby1ibWRqQUFBRhUAAsgBABUAGCRHQm40anhBbEVXc0JjSWNDQUt0WmU2Z2tucnNhYnJGcUFBQUYVAgLIAQBLBogScHJvZ3Jlc3NpdmVfcmVjaXBlATENc3Vic2FtcGxlX2ZwcwAQdm1hZl9lbmFibGVfbnN1YgAgbWVhc3VyZV9vcmlnaW5hbF9yZXNvbHV0aW9uX3NzaW0AKGNvbXB1dGVfc3NpbV9vbmx5X2F0X29yaWdpbmFsX3Jlc29sdXRpb24AEWRpc2FibGVfcG9zdF9wdnFzABUAJQAcAAAmqOCAjLnApgsVAigCQzMYC3Z0c19wcmV2aWV3HBdAPXaHKwIMShgZZGFzaF9vZXBfaHEyX2ZyYWdfMl92aWRlbxIAGBh2aWRlb3MudnRzLmNhbGxiYWNrLnByb2Q4ElZJREVPX1ZJRVdfUkVRVUVTVBsJiBVvZW1fdGFyZ2V0X2VuY29kZV90YWcGb2VwX2hkE29lbV9yZXF1ZXN0X3RpbWVfbXMBMAxvZW1fY2ZnX3J1bGUHdW5tdXRlZBNvZW1fcm9pX3JlYWNoX2NvdW50BDM4MzERb2VtX2lzX2V4cGVyaW1lbnQADG9lbV92aWRlb19pZA8zNzEyNjg2NjgyNjI5NzESb2VtX3ZpZGVvX2Fzc2V0X2lkEDEzNTg3MTUzMTQ1OTQzNTQVb2VtX3ZpZGVvX3Jlc291cmNlX2lkEDMxODA4OTQ4MDIxNTU1NDAcb2VtX3NvdXJjZV92aWRlb19lbmNvZGluZ19pZA81MjgwMTMzMTUzNDk1ODclAhwAJcQBGweIAXMENTUyNgJjZAoyMDIyLTA0LTAyA3JjYgQzODAwA2FwcBRGYWNlYm9vayBmb3IgQW5kcm9pZAJjdBlDT05UQUlORURfUE9TVF9BVFRBQ0hNRU5UE29yaWdpbmFsX2R1cmF0aW9uX3MGMjkuNTg2AnRzFXByb2dyZXNzaXZlX2VuY29kaW5ncwA%3D&ccb=1-5&_nc_sid=5e2f14&efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&_nc_ohc=d5FMM759QfkAX8FG16P&tn=SIjHU8LBZWe664y-&_nc_ht=video.ftjl2-1.fna&oh=00_AT9wiW7HE7IoeBS69LYtuVgEr0b1OVX-bCpthTKdK-ctEA&oe=62534835&_nc_rid=192074815240389'
@@ -40,16 +40,49 @@ opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKi
 urllib.request.install_opener(opener)
 
 
-local='embaixadinha2.mp4'
+local='embaixadinha.mp4'
 urllib.request.urlretrieve(url,local)
 
 
-print('time before start')
+print('starting')
 time.sleep(2.0)
 fps = ''
 
 width =''
 height = ''
+
+
+def image_resize(image, width = None, height = None, inter = cv2.INTER_AREA):
+    # initialize the dimensions of the image to be resized and
+    # grab the image size
+    dim = None
+    (h, w) = image.shape[:2]
+
+    # if both the width and height are None, then return the
+    # original image
+    if width is None and height is None:
+        return image
+
+    # check to see if the width is None
+    if width is None:
+        # calculate the ratio of the height and construct the
+        # dimensions
+        r = height / float(h)
+        dim = (int(w * r), height)
+
+    # otherwise, the height is None
+    else:
+        # calculate the ratio of the width and construct the
+        # dimensions
+        r = width / float(w)
+        dim = (width, int(h * r))
+
+    # resize the image
+    resized = cv2.resize(image, dim, interpolation = inter)
+
+    # return the resized image
+    return resized
+
 def frameNumber(title):
   
   sizeTitle = len(title)
@@ -147,7 +180,7 @@ def main():
       os.makedirs(pathIn)
       print('directory created')
 
-    cap = cv2.VideoCapture("embaixadinha2.mp4")
+    cap = cv2.VideoCapture("embaixadinha.mp4")
     path_to_save = os.path.abspath(pathIn)
 
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -197,7 +230,7 @@ def main():
 if __name__ == '__main__':
   main()
 
-print("pausa1")
+print("start detect bounding boxes")
 #time.sleep(10.0)
 
 #sys.argv= ['main', '--weights yolov3.pt', '--img 640', '--conf 0.25', '--yolov3\data\images\\', '--save-txt', '--classes 0 32']
@@ -402,7 +435,7 @@ arquivo.close()
 
 
 
-print("pausa2")
+print("processing video")
 #time.sleep(10.0)
 
 '''primeiro video
@@ -417,7 +450,7 @@ for filename in sorted(glob.glob('runs/detect/exp/*.jpg') , key=numericalSort):
       size = (width,height)
       img_array.append(img)
 
-out = cv2.VideoWriter('vboundBox3.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 30, size)
+out = cv2.VideoWriter('vboundBox.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 30, size)
 
 for i in range(len(img_array)):
       out.write(img_array[i])
@@ -425,7 +458,7 @@ for i in range(len(img_array)):
 out.release()
 
 
-print("pausa3")
+print("please wait")
 #time.sleep(10.0)
 
 '''
@@ -433,13 +466,13 @@ print("pausa3")
     escrever textos
 '''
 
-tree_video = cv2.VideoCapture('vboundBox3.mp4')
+tree_video = cv2.VideoCapture('vboundBox.mp4')
 path_to_save = os.path.abspath("imgSave/")
 
 
 frame_width  = tree_video.get(cv2.CAP_PROP_FRAME_WIDTH )
 frame_height = tree_video.get(cv2.CAP_PROP_FRAME_HEIGHT )
-
+'''
 if(frame_height == 720.0):
   img = cv2.imread('logo_vertical720.png')
 elif(frame_height == 480.0):
@@ -448,9 +481,31 @@ elif(frame_height == 1280.0):
   img = cv2.imread('logo_vertical720x1280.png')
 else:
   img = cv2.imread('logo_vertical2.png')
- 
-# Get Image dimensions
+'''
+
+img = cv2.imread('logo_mini.png', cv2.IMREAD_UNCHANGED)
+
+largeSide = frame_width
+
+print("largeside: " + str(largeSide))
+largeside = largeSide * 100
+largeSide = largeSide / 1920
+
+print("largeside: " + str(largeSide))
+
 img_height, img_width, _ = img.shape
+#imagenew = image_resize(img, height = (int((largeSide - 1) * img_width)))
+
+imagenew = cv2.resize(img,(int(img_height * largeSide), int(img_width * largeSide)))
+
+
+imagenew = cv2.addWeighted(imagenew, 0.74 , imagenew, 0, 0)
+
+cv2.imwrite("logo_new_2.png", imagenew)
+img = cv2.imread('logo_new_2.png', cv2.IMREAD_UNCHANGED)
+img_height, img_width, _ = img.shape
+largeSide = frame_width
+# Get Image dimensions
 print(str(img_height) +" "+str(img_width))
 
 #fps = tree_video.get(cv2.CAP_PROP_FPS)
@@ -487,8 +542,14 @@ while(True):
   #comment to temporarily remove the watermark
   #if(frame_ < length):
   #  dst = cv2.addWeighted(img, alpha, frame, beta, 0.0)
-    #overlay_image_alpha(frame, img, 150, 350, alpha_mask=0.1)
+    #overlay_image_alpha(frame, img, 250, 350, alpha_mask=0.1)
 
+
+
+
+  #background.show()
+
+  
     
   cv2.putText(frame, on_video_text, (150, 150), font, 3, (0, 255, 255), 6, cv2.LINE_4)
   #cv2.putText(dst, on_video_text, (150, 150), font, 3, (0, 255, 255), 6, cv2.LINE_4)
@@ -501,6 +562,22 @@ while(True):
     cv2.imwrite(os.path.join(path_to_save, name), frame)
   else:
     break
+
+  
+  from PIL import Image
+
+  background = Image.open(os.path.join(path_to_save, name))
+  foreground = Image.open("logo_new_2.png")
+
+
+
+  
+  #background.paste(foreground,( int((frame_width*0.1)/3), int((frame_height*0.9)/2)), foreground)
+  background.paste(foreground,(int(frame_width - (img_width + (img_width / 4))), 
+                              int(frame_height - (img_height + (img_height / 4)))), 
+                              foreground
+                  )
+  background.save(os.path.join(path_to_save, name))
   frame_ = frame_ + 1
 
   #cv2_imshow(frame)
@@ -520,7 +597,7 @@ while(True):
 tree_video.release()
 cv2.destroyAllWindows()
 
-print("pausa4")
+print("finishing")
 #time.sleep(10.0)
 
 
