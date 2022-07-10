@@ -15,6 +15,7 @@ import wget
 import pickle
 import urllib.request
 
+urlTest = True
 print(len(sys.argv))
 if (len(sys.argv) <= 1):
   urlTest = False
@@ -187,8 +188,9 @@ if(urlTest):
       cap = cv2.VideoCapture("embaixadinha.mp4")
       path_to_save = os.path.abspath(pathIn)
 
-      fps = cap.get(cv2.CAP_PROP_FPS)
-      #print("fps: "+str(fps))
+      #fps = cap.get(cv2.CAP_PROP_FPS)
+      fps = 15.0
+      print("fps: "+str(fps))
       
       current_frame = 1
 
@@ -242,7 +244,7 @@ if(urlTest):
 
   #!python detect.py --weights yolov3.pt --img 640 --conf 0.25 --source data/images --save-txt --save-conf --classes 0 32
 
-  os.system('python detect.py --weights yolov3.pt --img 640 --conf 0.25 --source data/images --save-conf    --save-txt --classes 0 32')
+  os.system('python detect.py  --img 640 --conf 0.25 --source data/images --save-conf    --save-txt --classes 0 32')
 
 
 
